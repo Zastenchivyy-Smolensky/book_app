@@ -32,4 +32,10 @@ class PostsController < ApplicationController
       render("/posts/edit")
     end
   end
+  def destroy
+    @post = Post.find_by(id: params[:id])
+    @post.destroy
+    flash[:notice] = "削除しました"
+    redirect_to("/posts/index")
+  end
 end
