@@ -7,6 +7,6 @@ Rails.application.routes.draw do
   get "posts/:id/edit" => "posts#edit"
   post "posts/:id/update" => "posts#update"
   post "posts/:id/destroy" => "posts#destroy"
-  get '/' => "home#index"
+  get '/home' => "home#index"
   get '/about' => "home#about"
 end
