@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root  'home#index'
+  get "/login" => "users#login_form"
+  post "/login" => "users#login"
+  get "logout" => "users#logout"
   get 'users/index' => "users#index"
   get "signup" => "users#new"
   get "users/:id" => "users#show"
