@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user,{only:[:index, :show, :edit, :update]}
+  before_action :forbid_login_user,{only: [:new, :create, :login_form,:login]}
+  before_action :ensure_correct_user,{only: [:edit,:update]}
   def index
     @users = User.all.order(created_at: :desc)
   end
@@ -14,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.new(
       name: params[:name], 
       email: params[:email],
-      # image_name: "araiguma1.jpg",
+      image_name: "araiguma1.jpg",
       password: params[:password]
     )
     if @user.save
@@ -60,5 +63,15 @@ class UsersController < ApplicationController
     session[:user_id] = nil
     flash[:notice] = "ログアウトしました"
     redirect_to("/users/index")
+  end
+  def likes
+    @user = User.find_by(id: params[:id])
+    @likes = Like.where(user_id: @user.id)
+  end
+  def ensure_correct_user
+    if params[:id].to_i != @current_user.id
+      flash[:notice] = "権限がありません"
+      redirect_to("/posts/index")
+    end
   end
 end

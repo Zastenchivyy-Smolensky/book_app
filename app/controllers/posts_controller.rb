@@ -4,13 +4,16 @@ class PostsController < ApplicationController
   end
   def show
     @post = Post.find_by(id: params[:id])
+    @user = @post.user
+    @likes_count = Like.where(post_id: @post.id).count
   end
   def new
     @post = Post.new
   end
   def create
     @post = Post.new(title: params[:title],
-                      content: params[:content])
+                      content: params[:content],
+                      user_id: @current_user.id)
     if @post.save
       flash[:notice] = "投稿しました"
       redirect_to("/posts/index")

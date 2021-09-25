@@ -1,9 +1,23 @@
 <div class="main posts-index">
   <div class="container">
     <% @posts.each do |post| %>
+      <!-- このコメント以下のコードをコピー -->
       <div class="posts-index-item">
-        <%= link_to post.title, "/posts/#{post.id}" %>
+        <div class="post-left">
+          <img src="<%= "/user_image/araiguma1.jpg" %>">
+        </div>
+        <div class="post-right">
+          <div class="post-user-name">
+            <%
+=begin%>
+ <%= link_to(post.user.name, "/users/#{post.user.id}") %> 
+<%
+=end%>
+          </div>
+          <%= link_to(post.content, "/posts/#{post.id}") %>
+        </div>
       </div>
+      <!-- ここまでのコードをコピー -->
     <% end %>
   </div>
 </div>
